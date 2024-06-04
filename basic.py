@@ -23,7 +23,7 @@ print(second_string+","+" "+first_string)
 
 print("5 task")
 a = 4
-b = 3gj
+b = 3
 c = 8
 f = (a * b) + (a * c)
 print(f**3/2)
