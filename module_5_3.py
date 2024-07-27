@@ -28,15 +28,9 @@ class House:
     def __ne__(self, other):
         return self.number_of_floors != other
     def __add__(self, value):
-        if isinstance(value, House):
+        if isinstance(self, House):
              self.number_of_floors += value
-             return f'Название: {self.name}, кол-во этажей: {self.number_of_floors}.'
-        elif isinstance(value, int):
-            self.number_of_floors += value
-            return f'Название: {self.name}, кол-во этажей: {self.number_of_floors}.'
-        else:
-            self.number_of_floors = value + self
-            return f'Название: {self.name}, кол-во этажей: {self.number_of_floors}.'
+             return self
     def __radd__(self, value):
         return self.__add__(value)
     def __iadd__(self, value):
