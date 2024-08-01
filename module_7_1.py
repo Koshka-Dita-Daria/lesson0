@@ -7,6 +7,7 @@ class Product:
     def __str__(self):
         return f'{self.name}, {self.weight}, {self.category}'
 
+
 class Shop:
     def __init__(self):
         self.__file_name = 'products.txt'
@@ -22,7 +23,7 @@ class Shop:
     def add(self, *products):
         existing_products = self.get_products()
         existing_names = set()
-        
+
         for line in existing_products.splitlines():
             if line:
                 product_name = line.split(',')[0].strip()
@@ -35,6 +36,7 @@ class Shop:
                 else:
                     file.write(f'{str(product)}\n')
                     existing_names.add(product.name)
+
 
 sl = Shop()
 p1 = Product('Potato', 50.5, 'Vegetables')
