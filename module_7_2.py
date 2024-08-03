@@ -4,9 +4,9 @@ def custom_write(file_name, *strings):
     strings_positions = set()
     file = open(file_name, 'a', encoding='utf-8')
     for i in strings:
-        if i not in strings_positions:
-            strings_positions["tuple(i, int(file.tell()))"].append(i)
-            file.write(f'{i}\n')
+        strings_positions["tuple(i, int(file.tell())"].append(i)
+    for a in strings_positions:
+        file.write(a)
     file.close
 
 info = [
