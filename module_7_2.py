@@ -4,9 +4,8 @@ def custom_write(file_name, *strings):
     strings_positions = set()
     file = open(file_name, 'a', encoding='utf-8')
     for i in strings:
-        strings_positions["tuple(i, int(file.tell())"].append(i)
-    for a in strings_positions:
-        file.write(a)
+        file.write(i)
+        strings_positions["tuple(i, int(file.tell())"] = i
     file.close
 
 info = [
