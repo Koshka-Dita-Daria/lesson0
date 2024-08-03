@@ -1,15 +1,13 @@
 import io
 from pprint import pprint
 def custom_write(file_name, *strings):
-    file_name = 'text.txt'
-    file = open(file_name, 'a')
-    i = 0
-    for line in strings:
-        i += 1
-        file.write(f'{str(line)}\n')
-        print(i, file.tell(), line)
-    file.close()
-
+    strings_positions = set()
+    file = open(file_name, 'a', encoding='utf-8')
+    for i in strings:
+        if i not in strings_positions:
+            strings_positions["{tuple(i, int(file.tell()))}"].append(i)
+            file.write(f'{i}\n')
+    file.close
 
 info = [
     'Text for tell.',
