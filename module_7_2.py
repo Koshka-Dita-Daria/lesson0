@@ -1,11 +1,14 @@
 import io
 from pprint import pprint
 def custom_write(file_name, *strings):
+    file = open(file_name, 'w', encoding='utf-8')
     strings_positions = set()
-    file = open(file_name, 'a', encoding='utf-8')
+    k = 1
     for i in strings:
         file.write(f'{i}\n')
         strings_positions["tuple(i, int(file.tell())"] = i
+        k += 1
+        file.seek(0)
     file.close
 
 info = [
