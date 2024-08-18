@@ -1,15 +1,15 @@
 import io
 from pprint import pprint
-def custom_write(file_name, *strings):
+def custom_write(file_name, strings):
     file = open(file_name, 'w', encoding='utf-8')
     strings_positions = set()
     k = 1
     for i in strings:
-        file.write(f'{i}\n')
-        strings_positions["tuple(i, int(file.tell())"] = i
+        strings_positions[(k, file.tell())] = i
+        file.write(str(i) + "\n")
         k += 1
-        file.seek(0)
-    file.close
+    file.close()
+    return strings_positions
 
 info = [
     'Text for tell.',
