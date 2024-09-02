@@ -13,15 +13,20 @@ class WordsFinder:
                 self.all_words[file_name] = text_file
         return self.all_words
     def find(self, word):
-        self.word = word.lower()
-        k = 1
-        for k, self.word in self.get_all_words().items():
-            for i in self.all_words:
-                if i == self.word:
-                    k += 1
-                if k != 0:
-                    break
-        return k, self.word
+        places = {}
+        for value, key in self.get_all_words().items():
+            if word.lower() in key:
+                places[value] = key.index(word.lower()) + 1
+        return places
+    def count(self, word):
+        amount = {}
+        k = 0
+        for value, key in self.get_all_words().items():
+            if word.lower() in key:
+                k += 1
+                amount[value] = key.count(word.lower())
+        return amount
 finder2 = WordsFinder('test_file.txt')
 print(finder2.get_all_words())
 print(finder2.find('TEXT'))
+print(finder2.count('teXT'))
