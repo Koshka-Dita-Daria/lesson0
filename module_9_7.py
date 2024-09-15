@@ -3,7 +3,7 @@ def is_prime(func):
     def wrapper(d, e, f):
         res = func(d, e, f)
         k = 0
-        if res == 2 or res == 1:
+        if abs(res) == 2 or abs(res) == 1:
             print("Простое")
         else:
             for i in range(2, int(res/2)):
