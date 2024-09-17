@@ -6,20 +6,20 @@ class StepValueError(ValueError):
 
 class Iterator:
     def __init__(self, start, stop, step=1):
-        if step == 0:
+        self.step = step
+        if self.step == 0:
             raise StepValueError('шаг не может быть равен 0')
         self.start, self.stop = start, stop
     def __iter__(self):
         self.pointer = self.start
         return self
     def __next__(self):
-        self.pointer += step()
-        if self.pointer > 0:
-            if self.pointer > self.stop or self.pointer < self.stop:
-                raise StopIteration()
+        current = self.pointer
+        if current > self.stop and self.step > 0 or current < self.stop and self.step < 0:
+            raise StopIteration()
         else:
-            if self.pointer < self.stop or self.pointer > self.stop:
-                raise StopIteration()
+            self.pointer += self.step
+            return current
 try:
     iter1 = Iterator(100, 200, 0)
     for i in iter1:
@@ -35,13 +35,13 @@ iter5 = Iterator(10, 1)
 
 for i in iter2:
     print(i, end=' ')
-    print()
+print()
 for i in iter3:
     print(i, end=' ')
-    print()
+print()
 for i in iter4:
     print(i, end=' ')
-    print()
+print()
 for i in iter5:
     print(i, end=' ')
-    print()
+print()
