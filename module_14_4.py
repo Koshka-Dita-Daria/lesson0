@@ -11,7 +11,7 @@ from crud_functions import *
 import asyncio
 
 crud_functions.get_all_products()
-api = "7691773916:AAE4NSBSKgZjOxPYLSdOF6tQSv51FeUxPvI"
+api = ""
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 kb = InlineKeyboardMarkup()
