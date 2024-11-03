@@ -24,7 +24,7 @@ async def registration(username: str, age: int) -> Users:
     if len(users) == 0:
         user_id = 1
     else:
-        user_id = len(users)+1
+        user_id = users[-1].id + 1
     k = Users(id=user_id, username=username, age=age)
     users.append(k)
     return k
