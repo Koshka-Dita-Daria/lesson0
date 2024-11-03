@@ -16,14 +16,14 @@ class Users(BaseModel):
     age: int
 
 
+@app.get("/")
+async def GetMainPage(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse("users.html", {"request": request, "users": users})
+
+
 @app.get("/user/{user_id}")
 async def call_dictionary(request: Request, user_id: int) -> HTMLResponse:
-    return templates.TemplateResponse("users.html", {"request": request, "users": users[user_id]})
-
-
-@app.get("/")
-async def get_all(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse("users.html", {"request": request, "user": users})
+    return templates.TemplateResponse("users.html", {"request": request, "user": users[user_id]})
 
 
 @app.post("/user/{username}/{age}")
@@ -31,7 +31,7 @@ async def registration(username: str, age: int) -> Users:
     if len(users) == 0:
         user_id = 1
     else:
-        user_id = len(users)+1
+        user_id = users[-1].id + 1
     k = Users(id=user_id, username=username, age=age)
     users.append(k)
     return k
