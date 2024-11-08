@@ -41,20 +41,17 @@ class Cafe:
 
     def discuss_guests(self):
         while not self.queue.empty() and any([table.guest for table in self.tables]):
-            table = random.choice(tables)
-            for i in guests:
-                if i == table.guest:
-                    guest = i
+            for table in self.tables:
+                if table.guest is not None and not table.guest.is_alive():
+                    print(f'{table.guest.name} покушал(-а) и ушёл(ушла)')
+                    print(f'Стол номер {table.number} свободен')
+                    table.guest = None
                     break
-
-            if guest.is_alive() and guest == table.guest:
-                print(f'{guest.name} покушал(-а) и ушёл(ушла)')
-                print(f'Стол номер {table.number} свободен')
-                table.guest = None
-            elif table.guest is None:
+            if table.guest is None and not self.queue.empty():
                 table.guest = self.queue.get()
-                print(f'{guest.name} вышел(-ла) из очереди и сел(-а) за стол номер {table.number}"')
-                guest.start()
+                print(f'{table.guest.name} вышел(-ла) из очереди и сел(-а) за стол номер {table.number}')
+                table.guest.start()
+
 
 
 # Создание столов
