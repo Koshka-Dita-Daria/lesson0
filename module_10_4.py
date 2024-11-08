@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import random
+import threading
 import time
 from time import sleep
 from random import randint
@@ -17,7 +19,7 @@ class Guest(Thread):
         self.name = name
 
     def run(self):
-        sleep(randint(3, 10))
+        time.sleep(randint(3, 10))
 
 
 class Cafe:
@@ -26,40 +28,33 @@ class Cafe:
         self.tables, self.queue = tables, Queue()
 
     def guest_arrival(self, *guests):
-        self.guests = guests
-        if len(self.guests) > len(self.tables):
-            for i in range(len(self.tables)):
-                if self.tables[i].guest is None:
-                    self.tables[i].guest = self.guests[i]
-                    self.tables[i].guest.start()
-                    print(f'{self.guests[i].name} сел(-а) за стол номер {self.tables[i].number}')
-            for g in range(len(self.tables), len(self.guests)):
-                self.queue.put(self.guests[g])
-                print(f"{self.guests[g].name} в очереди")
-        elif len(self.guests) < len(self.tables):
-            for i in range(len(self.guests)):
-                if self.tables[i].guest is None:
-                    self.tables[i].guest = self.guests[i]
-                    self.tables[i].guest.start()
-                    print(f'{self.guests[i].name} сел(-а) за стол номер {self.tables[i].number}')
-        else:
-            for i in range(len(self.tables)):
-                if self.tables[i].guest is None:
-                    self.tables[i].guest = self.guests[i]
-                    self.tables[i].guest.start()
-                    print(f'{self.guests[i].name} сел(-а) за стол номер {self.tables[i].number}')
+        for guest in guests:
+            for table in self.tables:
+                if table.guest is None:
+                    guest.start()
+                    print(f'{guest.name} сел(-а) за стол номер {table.number}')
+                    table.guest = guest
+                    break
+            else:
+                print(f'{guest.name} в очереди')
+                self.queue.put(guest)
 
     def discuss_guests(self):
-        while (self.queue.empty()) or (?):
-            for i in range(len(self.tables)):
-                if (not self.tables[i].guest is None) and (self.tables[i].guest.is_alive()):
-                    print(f'{self.tables[i].guest.name} покушал(-а) и ушёл(ушла)')
-                    print(f'Стол номер {self.tables[i].number} свободен')
-                    self.tables[i].guest = None
-                elif self.queue.empty() and self.tables[i].guest is None:
-                    self.tables[i].guest = self.queue.get()
-                    print(f"{self.queue.get().name}вышел(-ла) из очереди и сел(-а) за стол номер{self.tables[i].number}")
-                    self.tables[i].guest.start()
+        while not self.queue.empty() and any([table.guest for table in self.tables]):
+            table = random.choice(tables)
+            for i in guests:
+                if i == table.guest:
+                    guest = i
+                    break
+
+            if guest.is_alive() and guest == table.guest:
+                print(f'{guest.name} покушал(-а) и ушёл(ушла)')
+                print(f'Стол номер {table.number} свободен')
+                table.guest = None
+            elif table.guest is None:
+                table.guest = self.queue.get()
+                print(f'{guest.name} вышел(-ла) из очереди и сел(-а) за стол номер {table.number}"')
+                guest.start()
 
 
 # Создание столов
